@@ -174,6 +174,8 @@
             let deadline = new Date(deadline_element.value + "+1000");
             let time_diff = Date.now() - deadline.getTime();
             let text = "";
+
+            let gong_counter = 1000;
             setInterval(() => {
                 deadline = new Date(deadline_element.value + "+1000");
                 time_diff = deadline.getTime() - Date.now();
@@ -185,7 +187,8 @@
                     let seconds = Math.floor(time_diff / 1000) % 60;
                     text = "" + leftpad_with_zeros(hours, 2) + ":" + leftpad_with_zeros(minutes, 2) + ":" + leftpad_with_zeros(seconds, 2);
 
-                    if (hours <= 24 && minutes == 0 && seconds == 0) {
+                    if (hours <= 24 && minutes == 0 && seconds == 0 && gong_counter != hours) {
+                        gong_counter = hours;
                         let audio = new Audio('https://vetinari.net/bell.mp3');
                         audio.play();
                     }
